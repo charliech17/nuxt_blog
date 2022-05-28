@@ -1,17 +1,27 @@
 <template>
   <div class="all_category_section">
-    <NuxtLink
+    <div
       v-for="(category, index) in finalView"
       :key="index"
       class="category_background"
       :class="{ shakeAnimate: isEdit }"
-      :to="
-        goToPage({ categoryTitle: category.title, imageUrl: category.imageUrl })
-      "
     >
-      <div class="category_img"><img :src="category.imageUrl" /></div>
+    <!-- :to="
+        goToPage({ categoryTitle: category.title, imageUrl: category.imageUrl }) -->
+      <div class="category_img" @click="goToPage({ categoryTitle: category.title, imageUrl: category.imageUrl })"><img :src="category.imageUrl" /></div>
       <h3>{{ category.title }}</h3>
-    </NuxtLink>
+      <div class="deleteButton" @click.stop="deleteCategory" v-if="isEdit">X</div>
+    </div>
+    <el-dialog
+      :visible.sync="isClickPressed"
+      :append-to-body="true"
+      top="30vh"
+      width="80%"
+    >
+      <div slot="title" class="dialog_delete_title">警告！</div>
+      <div class="dialog_delete_content">您是否確認要刪除此類型，如此類型裡有相關文章，將一併刪除</div>
+      <div slot="footer" @click="confirmDelete">確認</div>
+    </el-dialog>
   </div>
 </template>
 
@@ -38,6 +48,7 @@ export default {
           previewText: '真的很棒',
         },
       ],
+      isClickPressed:false
     }
   },
   computed: {
@@ -53,25 +64,36 @@ export default {
       const path = this.$router.currentRoute.path
       //  若在首頁，或是/posts，進入該類別文章列表
       if (path === '/' || path === '/posts') {
-        return `/posts/${categoryTitle}`
+        // return `/posts/${categoryTitle}`
+        this.$router.push(`/posts/${categoryTitle}`)
       }
 
       // 若在類別文章列表，判斷是否編輯模式
         //  若"否"進入該文章
         //  若"是"編輯模式，
       if (!this.isEdit) {
-        return `/Admin/${categoryTitle}`
+        this.$router.push(`/Admin/${categoryTitle}`)
+        // return `/Admin/${categoryTitle}`
       } else {
-        return {
+        // return {
+        //   path: `/Admin/createNewCategory`,
+        //   query: { categoryTitle, imageUrl, isUpdate: true },
+        // }
+        this.$router.push({
           path: `/Admin/createNewCategory`,
           query: { categoryTitle, imageUrl, isUpdate: true },
-        }
+        })
       }
     },
+    deleteCategory(){
+      // console.log('try try see~~~')
+      this.isClickPressed = !this.isClickPressed
+    },
+    confirmDelete(){
+      //  TODO 加入delete 邏輯
+      this.isClickPressed = !this.isClickPressed
+    }
   },
-  // asyncData(){
-
-  // }
 }
 </script>
 
@@ -89,7 +111,6 @@ export default {
 }
 
 .category_background {
-  /* background-color: white; */
   background-color: rgb(255, 255, 255);
   box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.5);
   list-style: none;
@@ -99,6 +120,35 @@ export default {
   max-width: 300px;
   min-width: 150px;
   border-radius: .5rem;
+  position: relative;
+  cursor: pointer;
+}
+
+.dialog_delete_title{
+  text-align: center;
+}
+
+.delete_comfirm_dialog{
+  height: 30vh;
+  overflow: scroll;
+}
+
+.deleteButton{
+  position: absolute;
+  top: -12px;
+  right: -12px;
+  background-color: red;
+  width:24px;
+  height: 24px;
+  line-height: 24px;
+  index:2;
+  color:white;
+}
+
+.dialog_delete_content{
+  max-height: 30vh;
+  overflow-y: auto;
+  text-align: left;
 }
 
 .category_img {
