@@ -6,8 +6,6 @@
       class="category_background"
       :class="{ shakeAnimate: isEdit }"
     >
-    <!-- :to="
-        goToPage({ categoryTitle: category.title, imageUrl: category.imageUrl }) -->
       <div class="category_img" @click="goToPage({ categoryTitle: category.title, imageUrl: category.imageUrl })"><img :src="category.imageUrl" /></div>
       <h3>{{ category.title }}</h3>
       <div class="deleteButton" @click.stop="deleteCategory" v-if="isEdit">X</div>
@@ -73,12 +71,7 @@ export default {
         //  若"是"編輯模式，
       if (!this.isEdit) {
         this.$router.push(`/Admin/${categoryTitle}`)
-        // return `/Admin/${categoryTitle}`
       } else {
-        // return {
-        //   path: `/Admin/createNewCategory`,
-        //   query: { categoryTitle, imageUrl, isUpdate: true },
-        // }
         this.$router.push({
           path: `/Admin/createNewCategory`,
           query: { categoryTitle, imageUrl, isUpdate: true },
@@ -141,7 +134,6 @@ export default {
   width:24px;
   height: 24px;
   line-height: 24px;
-  index:2;
   color:white;
 }
 
