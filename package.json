@@ -16,6 +16,7 @@
   "dependencies": {
     "animate.css": "^4.1.1",
     "core-js": "^3.19.3",
+    "element-ui": "^2.15.8",
     "firebase": "^9.6.7",
     "nuxt": "^2.15.8",
     "vee-validate": "^3.4.14",

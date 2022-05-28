@@ -16,10 +16,15 @@ export default {
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
   },
   // Global CSS: https://go.nuxtjs.dev/config-css
-  css: ['@/assets/css/main.css'],
+  css: [
+    '@/assets/css/main.css',
+    {src:'element-ui/lib/theme-chalk/index.css'}
+    ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: ['@/plugins/global.js'],
+  plugins: ['@/plugins/global.js',
+            {src:'~plugins/element-ui', ssr: false}
+           ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -36,6 +41,7 @@ export default {
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
     transpile: ['vee-validate/dist/rules'],
+    vendor: ['element-ui'],
   },
   router:{
     middleware:'checkAuth'
