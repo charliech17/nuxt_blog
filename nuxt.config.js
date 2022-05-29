@@ -18,7 +18,8 @@ export default {
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
     '@/assets/css/main.css',
-    {src:'element-ui/lib/theme-chalk/index.css'}
+    '@/assets/css/main.scss',
+    {src:'element-ui/lib/theme-chalk/index.css'},
     ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
@@ -41,6 +42,14 @@ export default {
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
     transpile: ['vee-validate/dist/rules'],
+    loaders: {
+      sass: {
+        implementation: require('sass'),
+      },
+      scss: {
+        implementation: require('sass'),
+      },
+    },
     vendor: ['element-ui'],
   },
   router:{
