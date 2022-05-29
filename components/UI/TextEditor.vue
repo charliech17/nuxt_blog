@@ -3,14 +3,14 @@
     <section class="first_section">
       <button
         v-for="(text, index) in buttonText"
-        :key="index"
+        :key="index.toString()+'_common'"
         @click="handleButtons(buttonCommand[index])"
       >
         {{ buttonText[index] }}
       </button>
       <button
         v-for="(text, index) in buttonAlignText"
-        :key="index"
+        :key="index.toString()+'_alignText'"
         @click="handleButtons(buttonAlignCommand[index])"
       >
         {{ buttonAlignText[index] }}
@@ -19,7 +19,7 @@
     <section class="second_section">
       <button
         v-for="(text, index) in buttonColorText"
-        :key="index"
+        :key="index.toString()+'_colorText'"
         :style="{ backgroundColor: buttonColorCommand[index] }"
         @click="handleColors(buttonColorCommand[index])"
       >
@@ -27,7 +27,7 @@
       </button>
       <button
         v-for="(text, index) in fontSizeCommand"
-        :key="index"
+        :key="index.toString()+'_fontSize'"
         @click="handleFontSize(fontSizeCommand[index])"
       >
         {{ fontSizeText[index] }}
