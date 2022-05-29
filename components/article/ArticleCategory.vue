@@ -7,14 +7,13 @@
       :class="{ shakeAnimate: isEdit }"
     >
       <div class="category_img" @click="goToPage({ categoryTitle: category.title, imageUrl: category.imageUrl })"><img :src="category.imageUrl" /></div>
-      <h3>{{ category.title }}</h3>
+      <h3 class="category_title">{{ category.title }}</h3>
       <div class="deleteButton" @click.stop="deleteCategory" v-if="isEdit">X</div>
     </div>
     <el-dialog
       :visible.sync="isClickPressed"
-      :append-to-body="true"
       top="30vh"
-      width="80%"
+      custom-class="el_dialog_deleteButton"
     >
       <div slot="title" class="dialog_delete_title">警告！</div>
       <div class="dialog_delete_content">您是否確認要刪除此類型，如此類型裡有相關文章，將一併刪除</div>
@@ -90,12 +89,20 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .all_category_section {
   display: flex;
   flex-wrap: wrap;
   gap: 2.5vh;
   margin: 0 2.5vh;
+}
+
+.category_title{
+  font-size: 20px;
+
+  @media(min-width:1024px) {
+      font-size: 28px;
+  }
 }
 
 .all_category_section > * {
@@ -164,5 +171,16 @@ export default {
 .shakeAnimate {
   animation: shakeX 1.5s infinite;
   /* animation-duration: 2s;  */
+}
+
+::v-deep .el_dialog_deleteButton{
+    width: 80%;
+    max-width: 400px;
+    min-height: 20vh;
+
+  @media (min-width:768px) {
+    width: 50%;
+    max-width: 500px;
+  }
 }
 </style>
